@@ -1,0 +1,25 @@
+<%- include('../partials/header') %>
+    <%= user %>
+    <br>
+    <% todo.forEach(function(task){ %>
+        <div>
+            <%= task %>
+            <form action="/calendar/<%=id%>/<%=task.id%>/delete?_method=DELETE" method="POST">
+                <input type="submit" value="Delete Task">
+            </form>
+        </div>
+        <form action="/calendar/<%=id%>/<%=task.id%>/update?_method=PUT" method="POST">
+            <input type="text" name="task" value="Task Name">
+            <input type="text" name="description" value="Task Description">
+            <input type="submit" value="Update Task">
+        </form>
+        <br>
+    <% }) %>
+
+    <form action="/calendar/<%=id%>/add" method="POST">
+        <input type="text" name="task" value="Task Name">
+        <input type="text" name="description" value="Task Description">
+        <input type="submit" value="Add Task">
+    </form>
+
+<%- include('../partials/footer') %>

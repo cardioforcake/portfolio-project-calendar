@@ -8,21 +8,20 @@ function initial(){
     let lastDate = new Date(currentDate.getFullYear(), currentDate.getMonth()+1, 0)
 
     let datesOnCalendar = ''
-    console.log(lastDate)
-    console.log(firstDay.getDay())
 
     for(let i = firstDay.getDay(); i > 0 ; i--){
         let d = new Date(currentDate.getFullYear(), currentDate.getMonth(), 1-i)
-        datesOnCalendar += `<div class="prev">${d.getDate()}</div>`
+        datesOnCalendar += `<form action="/calendar/show/${d.getFullYear()}-${d.getMonth()+1}-${d.getDate()}" method="POST" class="prev"><input type="submit" value="${d.getDate()}"></form>`
     }
 
     for(let i = 1; i<= lastDate.getDate(); i++){
-        datesOnCalendar += `<div>${i}</div>`
+        let d = new Date(currentDate.getFullYear(), currentDate.getMonth(), i)
+        datesOnCalendar += `<form action="/calendar/show/${d.getFullYear()}-${d.getMonth()+1}-${d.getDate()}" method="POST"><input type="submit" value="${i}"></form>`
     }
 
     for(let i = 1; i < 7 - lastDate.getDay(); i++){
         let d = new Date(currentDate.getFullYear(), currentDate.getMonth(), lastDate.getDate()+i)
-        datesOnCalendar += `<div class="next">${d.getDate()}</div>`
+        datesOnCalendar += `<form action="/calendar/show/${d.getFullYear()}-${d.getMonth()+1}/${d.getDate()}"  method="POST" class="next"><input type="submit" value="${d.getDate()}"></form>`
     }
 
     dates.innerHTML = datesOnCalendar

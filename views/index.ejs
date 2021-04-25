@@ -1,0 +1,18 @@
+<%- include('./partials/header') %>
+
+
+<nav>
+    <% if(user){ %>
+        <a href="/logout"><input type="button" value="Logout"></a>
+    <% }else{  %>
+        <a href="/auth/google"><input type="button" value="Login"></a>
+    <% } %>
+</nav>
+<head>Welcome!</head>
+
+<div>Login to see your calendar</div>
+
+
+
+
+<%- include('./partials/footer') %>

@@ -28,8 +28,10 @@ app.use(passport.initialize())
 app.use(passport.session())
 
 const indexRoutes = require('./routes/index')
+const calendarRoutes = require('./routes/calendar')
 
 app.use('/', indexRoutes)
+app.use('/calendar', calendarRoutes)
 
 app.listen(port, () => {
     console.log(`Express is listening on port:${port}`)

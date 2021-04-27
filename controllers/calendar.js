@@ -63,9 +63,6 @@ function show(req, res){
     let x = false
     let dateObj
     Calendar.findById(req.user.id, function(err, calendar){
-        // let year = req.params.year
-        // let month = req.params.month
-        // let date = req.params.date
         calendar.dates.forEach(function(d){
             if(d.date === req.params.id){
                 x = true
@@ -80,7 +77,7 @@ function show(req, res){
             req.body.date = req.params.id
             calendar.dates.push(req.body)
             calendar.dates.forEach(function(d){
-                if(d.date === `${year}-${month}-${date}`){
+                if(d.date === req.params.id){
                     dateObj = d
                     return
                 }

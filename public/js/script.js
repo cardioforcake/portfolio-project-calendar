@@ -23,32 +23,32 @@ function initial(){
         let x = false
         let dateObj
         let dateTag = `${d.getFullYear()}-${d.getMonth()+1}-${d.getDate()}`
-        Calendar.findById(dateTag, function(err, calendar){
-            calendar.dates.forEach(function(d){
-                if(d.date === dateTag){
-                    x = true
-                    dateObj = d
-                    return
-                }
-            })
-            if(!x){
-                calendar.dates.push({date: dateTag})
-                calendar.dates.forEach(function(d){
-                    if(d.date === dateTag){
-                        dateObj = d
-                        return
-                    }
-                })
-                calendar.save()
-            }
-        })
+    //     Calendar.findById(dateTag, function(err, calendar){
+    //         calendar.dates.forEach(function(d){
+    //             if(d.date === dateTag){
+    //                 x = true
+    //                 dateObj = d
+    //                 return
+    //             }
+    //         })
+    //         if(!x){
+    //             calendar.dates.push({date: dateTag})
+    //             calendar.dates.forEach(function(d){
+    //                 if(d.date === dateTag){
+    //                     dateObj = d
+    //                     return
+    //                 }
+    //             })
+    //             calendar.save()
+    //         }
+    //     })
 
-        datesOnCalendar += `<a href="#${d.getFullYear()}-${d.getMonth()+1}-${d.getDate()}" class="btn modal-trigger">${d.getDate()}</a>
-        <div class="modal" id="${d.getFullYear()}-${d.getMonth()+1}-${d.getDate()}">
-            <div class="modal-content"><p>test</p></div>
-        </div>`
-        // `<form action="/calendar/show/${d.getFullYear()}-${d.getMonth()+1}-${d.getDate()}" method="POST" class="prev"><input type="submit" value="${d.getDate()}"></form>`
-    }
+    //     datesOnCalendar += `<a href="#${d.getFullYear()}-${d.getMonth()+1}-${d.getDate()}" class="btn modal-trigger">${d.getDate()}</a>
+    //     <div class="modal" id="${d.getFullYear()}-${d.getMonth()+1}-${d.getDate()}">
+    //         <div class="modal-content"><p>test</p></div>
+    //     </div>`
+    //     // `<form action="/calendar/show/${d.getFullYear()}-${d.getMonth()+1}-${d.getDate()}" method="POST" class="prev"><input type="submit" value="${d.getDate()}"></form>`
+    // }
 
     for(let i = 1; i<= lastDate.getDate(); i++){
         dateCount++

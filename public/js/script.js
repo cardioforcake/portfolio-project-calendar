@@ -19,7 +19,7 @@ function initial(){
     for(let i = firstDay.getDay(); i > 0 ; i--){
         dateCount++
         let d = new Date(currentDate.getFullYear(), currentDate.getMonth(), 1-i)
-
+        let bit = 8
         let x = false
         let dateObj
         let dateTag = `${d.getFullYear()}-${d.getMonth()+1}-${d.getDate()}`

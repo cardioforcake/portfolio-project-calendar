@@ -12,10 +12,13 @@
     <title>Document</title>
 </head>
 <body>
-    <nav>
+    <main>
+    <nav id='navi'>
+        <div class="nav-wrapper navi">
         <% if(user){ %>
-            <a href="/logout"><input type="button" value="Logout"></a>
+            <a href="/logout" class="waves-effect waves-light btn">Logout</a>
         <% }else{  %>
-            <a href="/auth/google"><input type="button" value="Login"></a>
+            <a href="/auth/google" class="waves-effect waves-light btn">Login</a>
         <% } %>
+        </div>
     </nav>

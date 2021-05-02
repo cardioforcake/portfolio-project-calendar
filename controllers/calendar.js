@@ -54,12 +54,7 @@ function add(req, res){
 }
 
 function index(req, res){
-    let dateObj
-
-
     let calendarDates = {}
-
-
     Calendar.findById(req.user.id, function(err, calendar){
         let currentDate = new Date()
         let firstDay = new Date(currentDate.getFullYear(), currentDate.getMonth(), 1)
@@ -68,46 +63,38 @@ function index(req, res){
         for(i = firstDay.getDay(); i>0; i--){
             let newDate = new Date()
             newDate.setDate(firstDay.getDate()-i)
-            let dateExists = calendar.dates.find(d => d.dates === `${newDate.getFullYear()}-${newDate.getMonth()+1}-${newDate.getDate()}`)
+            dateTag = `${newDate.getFullYear()}-${newDate.getMonth()+1}-${newDate.getDate()}`
+            let dateExists = calendar.dates.find(d => d.date === dateTag)
             if(!!dateExists){
-                calendarDates[`${newDate.getFullYear()}-${newDate.getMonth()+1}-${newDate.getDate()}`] = dateExists
+                calendarDates[dateTag] = dateExists
             }else{
-                req.body.date = `${newDate.getFullYear()}-${newDate.getMonth()+1}-${newDate.getDate()}`
+                req.body.date = dateTag
                 calendar.dates.push(req.body)
                 calendar.save()
-                calendarDates[`${newDate.getFullYear()}-${newDate.getMonth()+1}-${newDate.getDate()}`] = calendar.dates.find(d => d.dates === `${newDate.getFullYear()}-${newDate.getMonth()+1}-${newDate.getDate()}`)
+                calendarDates[dateTag] = calendar.dates.find(d => d.date === dateTag)
             }
         }
-
-        for(i=1; i<4; i++){
-            for(i = 1; i <= lastDate.getDate(); i++){
-                let newDate = new Date()
-                newDate.setMonth(lastDate.getMonth())
-                newDate.setDate(i)
-                let dateExists = calendar.dates.find(d => d.dates === `${newDate.getFullYear()}-${newDate.getMonth()+1}-${newDate.getDate()}`)
+        for(i=1; i<5; i++){
+            for(x = 1; x <= lastDate.getDate(); x++){
+                let newDate = new Date(lastDate.getFullYear(), lastDate.getMonth(), x)
+                dateTag = `${newDate.getFullYear()}-${newDate.getMonth()+1}-${newDate.getDate()}`
+                let dateExists = calendar.dates.find(d => d.date === dateTag)
                 if(!!dateExists){
-                    calendarDates[`${newDate.getFullYear()}-${newDate.getMonth()+1}-${newDate.getDate()}`] = dateExists
+                    calendarDates[dateTag] = dateExists
                 }else{
-                    req.body.date = `${newDate.getFullYear()}-${newDate.getMonth()+1}-${newDate.getDate()}`
+                    req.body.date = dateTag
                     calendar.dates.push(req.body)
                     calendar.save()
-                    calendarDates[`${newDate.getFullYear()}-${newDate.getMonth()+1}-${newDate.getDate()}`] = calendar.dates.find(d => d.dates === `${newDate.getFullYear()}-${newDate.getMonth()+1}-${newDate.getDate()}`)
+                    calendarDates[dateTag] = calendar.dates.find(d => d.date === dateTag)
                 }
             }
             lastDate = new Date(currentDate.getFullYear(), currentDate.getMonth()+1+i, 0)
         }
-        calendarDates['test'] = 'success'
-
         res.render('calendar/index', {
             user: req.user,
-            dates: calendarDates,
-            calendarDates: calendarDates
+            calendarDates
         })
     })
-
-
-
-
 }
 
 function show(req, res){
@@ -117,37 +104,9 @@ function show(req, res){
         dateObj = calendar.dates.find(d => d.date === req.params.id)
 
         res.render('calendar/show',{
-            user: calendar,
+            user: req.user,
             todo: dateObj.todo,
             id: req.params.id,
         })
     })
-        // calendar.dates.forEach(function(d){
-        //     if(d.date === req.params.id){
-        //         x = true
-        //         dateObj = d
-        //         return
-        //     }
-        // })
-        // if(!x){
-        //     req.body.date = req.params.id
-        //     calendar.dates.push(req.body)
-        //     calendar.dates.forEach(function(d){
-        //         if(d.date === req.params.id){
-        //             dateObj = d
-        //             return
-        //         }
-        //     })
-        //     calendar.save(function(err){
-        //         res.render('calendar/show',{
-        //             user: calendar,
-        //             todo: dateObj.todo,
-        //             id: req.params.id,
-        //         })
-        //     })
-        // }else{
-
-    //     }
-    // })
-
 }

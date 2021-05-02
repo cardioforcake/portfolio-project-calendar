@@ -1,7 +1,6 @@
 const mongoose = require('mongoose')
 
 const todoSchema = new mongoose.Schema({
-    task: String,
     description: String,
     complete: { type: Boolean, default: false}
 })

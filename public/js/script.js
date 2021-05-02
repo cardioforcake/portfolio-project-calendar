@@ -3,9 +3,6 @@ $(document).ready(function(){
   });
 
 
-
-console.log('success')
-
 const dates = document.getElementById('dates')
 
 function initial(){
@@ -24,9 +21,8 @@ function initial(){
 
         datesOnCalendar += `<a href="#${newDate.getFullYear()}-${newDate.getMonth()+1}-${newDate.getDate()}" class="btn modal-trigger">${newDate.getDate()}</a>
         <div class="modal" id="${newDate.getFullYear()}-${newDate.getMonth()+1}-${newDate.getDate()}">
-            <div class="modal-content"><p>3</p></div>
+            <div class="modal-content"><%= calendarDates["${newDate.getFullYear()}-${newDate.getMonth()+1}-${newDate.getDate()}"] %></div>
         </div>`
-        // `<form action="/calendar/show/${d.getFullYear()}-${d.getMonth()+1}-${d.getDate()}" method="POST" class="prev"><input type="submit" value="${d.getDate()}"></form>`
     }
 
     for(let i = 1; i<= lastDate.getDate(); i++){

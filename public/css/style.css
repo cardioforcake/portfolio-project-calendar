@@ -1,6 +1,146 @@
+
+main{
+    height: 100vh;
+    width: 100vw;
+    background-color: black;
+
+}
+
+#navi{
+    height: 60px;
+}
+
+.navi{
+    height: 60px;
+    align-content: center;
+}
+
+#current-month{
+    color: white;
+}
+
 #dates{
-    background-color: bisque;
+    /* background-color:seagreen; */
     display: grid;
-    grid-template-rows: 5rem 5rem 5rem 5rem 5rem 5rem;
-    grid-template-columns: 5rem 5rem 5rem 5rem 5rem 5rem 5rem;
+    grid-template-rows: 3.3rem 3.3rem 3.3rem 3.3rem 3.3rem 3.3rem;
+    grid-template-columns: 3.3rem 3.3rem 3.3rem 3.3rem 3.3rem 3.3rem 3.3rem;
+    /* border-style: solid;
+    border-width: 1px; */
+    width: 27rem;
+    height: 23rem;
+    grid-gap: 0.3rem;
+    padding: auto auto auto auto;
+    align-content: center;
+    justify-content: center;
+    margin: 0 auto;
+}
+
+#day-labels{
+    display: grid;
+    grid-template-columns: 3.3rem 3.3rem 3.3rem 3.3rem 3.3rem 3.3rem 3.3rem;
+    grid-template-rows: 2rem;
+    width: 27rem;
+    height: 3rem;
+    grid-gap: 0.3rem;
+    /* padding: auto auto auto auto; */
+    align-content: center;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    margin: 0 auto;
+    color: white;
+}
+
+.day{
+    margin-top: 0.5rem;
+}
+
+.arrow-btn{
+    width: 10px;
+    align-content: center;
+}
+
+.date{
+    text-decoration: none;
+    height: 100%;
+    width: 100%;
+    /* border-width: 1px;
+    border-style: solid; */
+    border-color: black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: lightgreen;
+    color: black;
+    border-radius: 2px;
+}
+
+.date:hover{
+    border-radius: 3px;
+    border-bottom: solid rgb(33, 33, 33);
+    border-right: solid rgb(33, 33, 33);
+    border-top: solid rgb(88, 88, 88);
+    border-left: solid rgb(88, 88, 88);
+}
+
+.edge{
+    color: gray;
+}
+
+#calendar-area{
+    margin: 0 auto;
+    height: 26rem;
+    width: 27rem;
+    background-color: seagreen;
+    border-radius: 3px;
+}
+
+#calendar-header{
+    display: grid;
+    grid-template-columns: 3rem 15rem 3rem;
+    grid-template-rows: 2rem;
+    width: 25rem;
+    margin: 1rem auto 0.75rem auto;
+    font-size: 1.2rem;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+#today{
+    background-color:chartreuse;
+}
+
+
+.arrow {
+    border: solid white;
+    border-width: 0 5px 5px 0;
+    display: inline-block;
+    padding: 3px;
+    height: 1rem;
+    width: 1rem;
+}
+
+.right {
+    transform: rotate(-45deg);
+    -webkit-transform: rotate(-45deg);
+}
+
+.left {
+    transform: rotate(135deg);
+    -webkit-transform: rotate(135deg);
+}
+
+.up {
+    transform: rotate(-135deg);
+    -webkit-transform: rotate(-135deg);
+}
+
+.down {
+    transform: rotate(45deg);
+    -webkit-transform: rotate(45deg);
+}
+
+.hidden{
+    display: none;
 }

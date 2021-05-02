@@ -2,53 +2,95 @@
 
 <head></head>
 
-<div>Calendar Placeholder</div>
 
-<div class="calendar-area">
-    <div>April</div>
-    <div>
-        <div>Sun</div>
-        <div>Mon</div>
-        <div>Tues</div>
-        <div>Wed</div>
-        <div>Thurs</div>
-        <div>Fri</div>
-        <div>Sat</div>
+<div >
+    <div id="calendar-header">
+        <div><div class="arrow-btn" id="left-arrow"><i class="arrow left"></i></div></div>
+        <div id="current-month" ></div>
+        <div><div class="arrow-btn" id="right-arrow"><i class="arrow right"></i></div></div>
+    </div>
+    <div id="calendar-area">
+    <div id="day-labels">
+        <div class="day">Sun</div>
+        <div class="day">Mon</div>
+        <div class="day">Tue</div>
+        <div class="day">Wed</div>
+        <div class="day">Thur</div>
+        <div class="day">Fri</div>
+        <div class="day">Sat</div>
     </div>
     <div id='dates'>
-        <!-- <a href="#2021-4-1" class="btn modal-trigger">1</a>
-        <div class="modal" id="2021-4-1">
-            <div class="modal-content"><p><%= Object.keys(calendarDates).length %></p></div>
-        </div> -->
     </div>
-    <a href="#modal1" class="btn orange modal-trigger">test</a>
+    </div>
+    <!-- <a href="#modal1" class="btn orange modal-trigger">test</a>
     <div class="modal" id="modal1">
         <div class="modal-content">testting</div>
-    </div>
+    </div> -->
     
-<p id="test">
-    <%= Object.keys(calendarDates) %>
-</p>
 
 </div>
 
 <script>
-    $(document).ready(function(){
-    $('.modal').modal();
-  });
+$(document).ready(function(){
+    $('.modal').modal()
+})
 
+let datesList = JSON.parse('<%- JSON.stringify(calendarDates)%>')
 
+const monthsList = [
+    'January',
+    'February',
+    'March',
+    'April',
+    'May',
+    'June',
+    'July',
+    'August',
+    'September',
+    'October',
+    'November',
+    'December',
+]
 
-console.log('success')
+let currentDate = new Date()
+let monthShown = new Date()
 
 const dates = document.getElementById('dates')
-const cal = '<%- calendarDates %>'
-console.log(Object.values(cal))
+const currentMonth = document.getElementById('current-month')
+const rightArrow = document.getElementById('right-arrow')
+const leftArrow = document.getElementById('left-arrow')
+
+rightArrow.addEventListener('click', function(){
+    monthShown.setMonth(monthShown.getMonth()+1)
+    updateCalendar(monthShown)
+    if(monthShown.getMonth() > currentDate.getMonth()+1){
+        rightArrow.classList.add('hidden')
+    }
+    leftArrow.classList.remove('hidden')
+    $(document).ready(function(){
+        $('.modal').modal()
+    })
+})
+leftArrow.addEventListener('click', function(){
+    monthShown.setMonth(monthShown.getMonth()-1)
+    updateCalendar(monthShown)
+    if(monthShown.getMonth() === currentDate.getMonth()){
+        leftArrow.classList.add('hidden')
+    }
+    rightArrow.classList.remove('hidden')
+    $(document).ready(function(){
+        $('.modal').modal()
+    })
+})
 
 function initial(){
-    let currentDate = new Date()
-    let firstDay = new Date(currentDate.getFullYear(), currentDate.getMonth(), 1)
-    let lastDate = new Date(currentDate.getFullYear(), currentDate.getMonth()+1, 0)
+    updateCalendar(monthShown)
+    leftArrow.classList.add('hidden')
+}
+
+function updateCalendar(date){
+    let firstDay = new Date(date.getFullYear(), date.getMonth(), 1)
+    let lastDate = new Date(date.getFullYear(), date.getMonth()+1, 0)
 
     let datesOnCalendar = ''
     let dateCount = 0
@@ -57,32 +99,61 @@ function initial(){
     for(let i = firstDay.getDay(); i > 0 ; i--){
         dateCount++
         let newDate = new Date(firstDay.getFullYear(), firstDay.getMonth(), 1-i)
-        let dateTag = `${newDate.getFullYear()}-${newDate.getMonth()+1}-${newDate.getDate()}`
-
-        datesOnCalendar += `<a href="#${newDate.getFullYear()}-${newDate.getMonth()+1}-${newDate.getDate()}" class="btn modal-trigger">${newDate.getDate()}</a>
-        <div class="modal" id="${newDate.getFullYear()}-${newDate.getMonth()+1}-${newDate.getDate()}">
-            <div class="modal-content"><p>${cal}</p></div>
-        </div>`
-        // `<form action="/calendar/show/${d.getFullYear()}-${d.getMonth()+1}-${d.getDate()}" method="POST" class="prev"><input type="submit" value="${d.getDate()}"></form>`
+        datesOnCalendar += populateCalendar(newDate,'edge-dates')
     }
+
 
     for(let i = 1; i<= lastDate.getDate(); i++){
         dateCount++
-        let d = new Date(currentDate.getFullYear(), currentDate.getMonth(), i)
-        datesOnCalendar += `<form action="/calendar/show/${d.getFullYear()}-${d.getMonth()+1}-${d.getDate()}" method="POST"><input type="submit" value="${i}"></form>`
+        let newDate = new Date(date.getFullYear(), date.getMonth(), i)
+        datesOnCalendar += populateCalendar(newDate,'current')
     }
 
     for(let i = 1; i <= 42-dateCount; i++){
-        let d = new Date(currentDate.getFullYear(), currentDate.getMonth(), lastDate.getDate()+i)
-        datesOnCalendar += `<form action="/calendar/show/${d.getFullYear()}-${d.getMonth()+1}-${d.getDate()}"  method="POST" class="next"><input type="submit" value="${d.getDate()}"></form>`
+        let newDate = new Date(date.getFullYear(), date.getMonth(), lastDate.getDate()+i)
+        datesOnCalendar += populateCalendar(newDate,'edge-dates')
     }
 
     dates.innerHTML = datesOnCalendar
+    currentMonth.innerHTML = monthsList[date.getMonth()]
+}
+
+function populateCalendar(date, monthIdx){
+    let calDates = ''
+    let dateTag = `${date.getFullYear()}-${date.getMonth()+1}-${date.getDate()}`
+    let dailyTasks = datesList[dateTag].todo
+    if(monthIdx === 'edge-dates'){
+        calDates += `<a href="#${dateTag}" class="date edge modal-trigger">${date.getDate()}</a>
+    <div class="modal" id="${dateTag}">
+        <div class="modal-content">`
+    }else{
+        if(date.getDate() == currentDate.getDate() && date.getMonth() == currentDate.getMonth()){
+            calDates += `<a href="#${dateTag}" class="date modal-trigger" id="today">${date.getDate()}</a>
+        <div class="modal" id="${dateTag}">
+            <div class="modal-content">`
+        }else{
+            calDates += `<a href="#${dateTag}" class="date modal-trigger">${date.getDate()}</a>
+        <div class="modal" id="${dateTag}">
+            <div class="modal-content">`
+        }
+    }
+
+
+
+    dailyTasks.forEach(task => {
+        if(!task.complete){
+            calDates += `<div class="incomplete">${task.description}</div>`
+        }else{
+            calDates += `<div class="complete">${task.description}</div>`
+        }
+    })
+
+    calDates += `<form action="/calendar/show/${dateTag}"><input type="submit" value="Update"></form></div></div>`
+    return calDates
 }
 
 initial()
 </script>
-<!-- <script src="/js/script.js"></script> -->
 
 
 <%- include('../partials/footer') %>

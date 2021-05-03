@@ -13,12 +13,16 @@
 </head>
 <body>
     <main>
-    <nav id='navi'>
-        <div class="nav-wrapper navi">
+    <nav class="green lighten-1 navi">
+        <div class="nav-wrapper">
         <% if(user){ %>
-            <a href="/logout" class="waves-effect waves-light btn">Logout</a>
+            <div class="card-action right-align">
+                <a href="/logout" class="waves-effect waves-light btn green darken-3 log">Logout</a>
+            </div>
         <% }else{  %>
-            <a href="/auth/google" class="waves-effect waves-light btn">Login</a>
+            <div class="card-action right-align">
+                <a href="/auth/google" class="waves-effect waves-light btn green darken-3 log">Login</a>
+            </div>
         <% } %>
         </div>
     </nav>

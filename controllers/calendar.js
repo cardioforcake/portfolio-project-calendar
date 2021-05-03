@@ -18,10 +18,21 @@ function move(req, res){
             let taskObj = currentDateObj.todo.find(t=> t.id === req.params.task)
             currentDateObj.todo.pull(req.params.task)
             let dateObj = calendar.dates.find(d => d.date === dateTag)
-            dateObj.todo.push(taskObj)
-            calendar.save(function(err){
-                res.redirect('/calendar')
-            })
+            if(!!dateObj){
+                dateObj.todo.push(taskObj)
+                calendar.save(function(err){
+                    res.redirect('/calendar')
+                })
+            }else{
+                req.body.date = dateTag
+                calendar.dates.push(req.body)
+                let dateObj = calendar.dates.find(d => d.date === dateTag)
+                dateObj.todo.push(taskObj)
+                calendar.save(function(err){
+                    res.redirect('/calendar')
+                })
+            }
+
         })
     }else{
         res.redirect('/calendar')
@@ -68,11 +79,12 @@ function index(req, res){
     let calendarDates = {}
     Calendar.findById(req.user.id, function(err, calendar){
         let currentDate = new Date()
-        let firstDay = new Date(currentDate.getFullYear(), currentDate.getMonth(), 1)
-        let lastDate = new Date(currentDate.getFullYear(), currentDate.getMonth()+1, 0)
+        let firstDay = new Date(currentDate.getFullYear(), currentDate.getMonth()-1, 1)
+        let lastDate = new Date(currentDate.getFullYear(), currentDate.getMonth(), 0)
 
         for(i = firstDay.getDay(); i>0; i--){
             let newDate = new Date()
+            newDate.setMonth(firstDay.getMonth())
             newDate.setDate(firstDay.getDate()-i)
             dateTag = `${newDate.getFullYear()}-${newDate.getMonth()+1}-${newDate.getDate()}`
             let dateExists = calendar.dates.find(d => d.date === dateTag)
@@ -85,7 +97,7 @@ function index(req, res){
                 calendarDates[dateTag] = calendar.dates.find(d => d.date === dateTag)
             }
         }
-        for(i=1; i<5; i++){
+        for(i=1; i<8; i++){
             for(x = 1; x <= lastDate.getDate(); x++){
                 let newDate = new Date(lastDate.getFullYear(), lastDate.getMonth(), x)
                 dateTag = `${newDate.getFullYear()}-${newDate.getMonth()+1}-${newDate.getDate()}`
@@ -99,7 +111,7 @@ function index(req, res){
                     calendarDates[dateTag] = calendar.dates.find(d => d.date === dateTag)
                 }
             }
-            lastDate = new Date(currentDate.getFullYear(), currentDate.getMonth()+1+i, 0)
+            lastDate = new Date(lastDate.getFullYear(), lastDate.getMonth()+2, 0)
         }
         res.render('calendar/index', {
             user: req.user,

@@ -1,8 +1,6 @@
 <%- include('../partials/header') %>
 
 <head></head>
-
-
 <div >
     <div id="calendar-header">
         <div><div class="arrow-btn" id="left-arrow"><i class="arrow left"></i></div></div>
@@ -15,20 +13,19 @@
         <div class="day">Mon</div>
         <div class="day">Tue</div>
         <div class="day">Wed</div>
-        <div class="day">Thur</div>
+        <div class="day">Thu</div>
         <div class="day">Fri</div>
         <div class="day">Sat</div>
     </div>
     <div id='dates'>
+        <!-- calendar insert -->
     </div>
     </div>
-    <!-- <a href="#modal1" class="btn orange modal-trigger">test</a>
-    <div class="modal" id="modal1">
-        <div class="modal-content">testting</div>
-    </div> -->
-    
-
 </div>
+
+
+
+
 
 <script>
 $(document).ready(function(){
@@ -36,7 +33,6 @@ $(document).ready(function(){
 })
 
 let datesList = JSON.parse('<%- JSON.stringify(calendarDates)%>')
-
 const monthsList = [
     'January',
     'February',
@@ -50,6 +46,49 @@ const monthsList = [
     'October',
     'November',
     'December',
+]
+
+const daysList = [
+    'Sunday',
+    'Monday',
+    'Tuesday',
+    'Wednesday',
+    'Thursday',
+    'Friday',
+    'Saturday',
+]
+
+const calendarDatesList =[
+    '1st',
+    '2nd',
+    '3rd',
+    '4th',
+    '5th',
+    '6th',
+    '7th',
+    '8th',
+    '9th',
+    '10th',
+    '11th',
+    '13th',
+    '14th',
+    '15th',
+    '16th',
+    '17th',
+    '18th',
+    '19th',
+    '20th',
+    '21st',
+    '22nd',
+    '23rd',
+    '24th',
+    '25th',
+    '26th',
+    '27th',
+    '28th',
+    '29th',
+    '30th',
+    '31st',
 ]
 
 let currentDate = new Date()
@@ -71,6 +110,7 @@ rightArrow.addEventListener('click', function(){
         $('.modal').modal()
     })
 })
+
 leftArrow.addEventListener('click', function(){
     monthShown.setMonth(monthShown.getMonth()-1)
     updateCalendar(monthShown)
@@ -91,32 +131,27 @@ function initial(){
 function updateCalendar(date){
     let firstDay = new Date(date.getFullYear(), date.getMonth(), 1)
     let lastDate = new Date(date.getFullYear(), date.getMonth()+1, 0)
-
     let datesOnCalendar = ''
     let dateCount = 0
     let dateTest = 3
-
     for(let i = firstDay.getDay(); i > 0 ; i--){
         dateCount++
         let newDate = new Date(firstDay.getFullYear(), firstDay.getMonth(), 1-i)
         datesOnCalendar += populateCalendar(newDate,'edge-dates')
     }
-
-
     for(let i = 1; i<= lastDate.getDate(); i++){
         dateCount++
         let newDate = new Date(date.getFullYear(), date.getMonth(), i)
         datesOnCalendar += populateCalendar(newDate,'current')
     }
-
     for(let i = 1; i <= 42-dateCount; i++){
         let newDate = new Date(date.getFullYear(), date.getMonth(), lastDate.getDate()+i)
         datesOnCalendar += populateCalendar(newDate,'edge-dates')
     }
-
     dates.innerHTML = datesOnCalendar
     currentMonth.innerHTML = monthsList[date.getMonth()]
 }
+
 
 function populateCalendar(date, monthIdx){
     let calDates = ''
@@ -124,35 +159,99 @@ function populateCalendar(date, monthIdx){
     let dailyTasks = datesList[dateTag].todo
     if(monthIdx === 'edge-dates'){
         calDates += `<a href="#${dateTag}" class="date edge modal-trigger">${date.getDate()}</a>
-    <div class="modal" id="${dateTag}">
+    <div class="modal task-list" id="${dateTag}">
         <div class="modal-content">`
     }else{
         if(date.getDate() == currentDate.getDate() && date.getMonth() == currentDate.getMonth()){
             calDates += `<a href="#${dateTag}" class="date modal-trigger" id="today">${date.getDate()}</a>
-        <div class="modal" id="${dateTag}">
+        <div class="modal task-list" id="${dateTag}">
             <div class="modal-content">`
         }else{
             calDates += `<a href="#${dateTag}" class="date modal-trigger">${date.getDate()}</a>
-        <div class="modal" id="${dateTag}">
+        <div class="modal task-list" id="${dateTag}">
             <div class="modal-content">`
         }
     }
 
-
+    calDates += `<div class="modal-display">
+                    <div class="modal-date-display">
+                        <div class="modal-date-weekday">${daysList[date.getDay()]}</div>
+                        <div class="modal-date-date">${monthsList[date.getMonth()]} ${calendarDatesList[date.getDate()]}, ${date.getFullYear()}</div>
+                    </div>
+                    <div class='modal-todo-list'>`
 
     dailyTasks.forEach(task => {
         if(!task.complete){
-            calDates += `<div class="incomplete">${task.description}</div>`
+            calDates += `<div class="incomplete"><div class="not-done">
+                <a href="#${task._id}" class="modal-trigger desc">${task.description}</a>
+                <div class="modal task-details" id="${task._id}">
+                    <div class="modal-content task">
+                        <div class="edit">
+                            <form action="/calendar/${dateTag}/${task._id}/update?_method=PUT" class="update" method="POST">
+                                <textarea name="description" class="text-area">${task.description}</textarea>
+                                <label class="check-box">
+                                    <input type="checkbox" name="complete">
+                                    <span>Done?</span>
+                                </label>
+                                <input type="submit" value="Update" class="update-task">
+                            </form>
+                            <form action="/calendar/${dateTag}/${task._id}/delete?_method=DELETE" class="delete" method="POST">
+                                <input type="submit" value="Remove" class="remove">
+                            </form>
+                            <form  action="/calendar/${dateTag}/${task._id}/move?_method=DELETE" method="POST" class="date-update">
+                                <input type="date" name="date">
+                                <input type="submit" value="move" class="move">
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div></div>`
         }else{
-            calDates += `<div class="complete">${task.description}</div>`
+            calDates += `<div class="complete"><div class="done">
+                <a href="#${task._id}" class="modal-trigger desc">${task.description}</a>
+                <div class="modal task-details" id="${task._id}">
+                    <div class="modal-content task">
+                        <div class="edit">
+                            <form action="/calendar/${dateTag}/${task._id}/update?_method=PUT" class="update" method="POST">
+                            <textarea name="description" class="text-area">${task.description}</textarea>
+                            <label class="check-box">
+                                <input type="checkbox" name="complete" CHECKED>
+                                <span>Done?</span>
+                            </label>
+                            <input type="submit" value="Update" class="update-task">
+                            </form>
+                            <form action="/calendar/${dateTag}/${task._id}/delete?_method=DELETE" class="delete" method="POST">
+                                <input type="submit" value="Remove" class="remove">
+                            </form>
+                            <form  action="/calendar/${dateTag}/${task._id}/move?_method=DELETE" method="POST" class="date-update">
+                                <input type="date" name="date">
+                                <input type="submit" value="move" class="move">
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div></div>`
         }
     })
-
-    calDates += `<form action="/calendar/show/${dateTag}"><input type="submit" value="Update"></form></div></div>`
+    calDates += `</div>
+                <form action="/calendar/${dateTag}/add" method="POST" class="modal-create-new">
+                    <a href="#${dateTag}add" class="modal-trigger add">
+                        <input type="button" value="Create New Task" class="create-button">
+                    </a>
+                    <div class="modal" id="${dateTag}add">
+                        <div class="modal-content">
+                            <form action="/calendar/${dateTag}/add" class="add" method="POST">
+                                <textarea name="description"></textarea>
+                                <input type="submit" value="Add Task">
+                            </form>
+                        </div>
+                    </div>
+                </form></div></div></div>`
     return calDates
 }
 
 initial()
+
 </script>
 
 

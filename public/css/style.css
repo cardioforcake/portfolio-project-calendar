@@ -3,7 +3,116 @@ main{
     height: 100vh;
     width: 100vw;
     background-color: black;
+}
 
+.modal-display{
+    display: grid;
+    grid-template-rows: 4.5rem minmax(3rem, auto) 3rem;
+}
+
+.modal-date-display{
+    text-align: center;
+}
+
+.modal-date-weekday{
+    font-weight: bold;
+    font-size: 1.4rem;
+}
+
+.modal-create-new{
+    margin: 1rem auto;
+}
+
+.create-button{
+    height: 2.5rem;
+    border-radius: 4px;
+}
+
+.update-task, .remove, .move{
+    border-radius: 4px;
+}
+
+.remove{
+    background-color: rgba(255, 17, 0, 0.651);
+}
+
+textarea{
+    resize: none;
+    height: 4rem;
+    width: 14rem;
+}
+.edit{
+    display: grid;
+    grid-template-rows: 4.7rem 2rem 3rem;
+    grid-template-columns: 21rem;
+}
+
+.delete{
+    display: flex;
+    justify-content: flex-end;
+}
+
+.remove{
+    width: 6rem;
+    font-size: 0.9rem;
+    height: 2rem;
+}
+
+.date-update{
+    display: grid;
+    grid-template-columns: 14rem 1rem 6rem;
+    grid-template-rows: 2rem;
+}
+
+.move{
+    grid-column-start: 3;
+    margin-top: 0.7rem;
+    height: 2rem;
+}
+
+.update{
+    display: grid;
+    grid-template-columns: 15rem 6rem;
+    grid-template-rows: 2rem 2rem;
+}
+
+.text-area{
+    grid-column-start: 1;
+    grid-row-start: 1;
+    grid-row-end: span 2;
+    height: 6.7rem;
+}
+
+.check-box{
+    grid-column-start: 2;
+    grid-row-start: 1;
+}
+
+span{
+    color: black;
+}
+
+.task{
+    padding-top: 1.5rem !important;
+    padding-bottom: 1.5rem !important;
+}
+
+.update-task{
+    grid-column-start: 2;
+    grid-row-start: 2;
+    font-size: 0.9rem;
+}
+
+.task-list{
+    min-height: 20rem;
+    max-height: 31rem !important;
+    width: 32rem;
+    background: -webkit-linear-gradient(lightgreen,white);
+}
+
+.task-details{
+    width: 24.5rem;
+    height: 13rem;
 }
 
 #navi{
@@ -17,6 +126,33 @@ main{
 
 #current-month{
     color: white;
+}
+
+.complete{
+    border-radius: 5px;
+    border: solid black;
+}
+
+.done{
+    background-color: rgba(128, 128, 128, 0.562);
+    height: 100%;
+    width: 100%;
+}
+
+.incomplete{
+    border-radius: 5px;
+    border: solid green;
+}
+
+.not-done{
+    background-color: rgba(0, 128, 0, 0.37);
+    height: 100%;
+    width: 100%;
+}
+
+.desc{
+    color: black;
+    opacity: 1;
 }
 
 #dates{

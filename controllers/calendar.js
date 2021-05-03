@@ -3,52 +3,63 @@ const Calendar = require('../models/calendar')
 
 module.exports ={
     index,
-    show,
     add,
     del,
     update,
+    move,
+}
+
+function move(req, res){
+    if(!!req.body.date){
+        Calendar.findById(req.user.id, function(err, calendar){
+            let newDate = new Date(req.body.date + "T00:00")
+            let dateTag = `${newDate.getFullYear()}-${newDate.getMonth()+1}-${newDate.getDate()}`
+            let currentDateObj = calendar.dates.find(d => d.date === req.params.id)
+            let taskObj = currentDateObj.todo.find(t=> t.id === req.params.task)
+            currentDateObj.todo.pull(req.params.task)
+            let dateObj = calendar.dates.find(d => d.date === dateTag)
+            dateObj.todo.push(taskObj)
+            calendar.save(function(err){
+                res.redirect('/calendar')
+            })
+        })
+    }else{
+        res.redirect('/calendar')
+    }
 }
 
 function update(req, res){
     Calendar.findById(req.user.id, function(err, calendar){
-        calendar.dates.forEach(function(d){
-            if(d.date === req.params.id){
-                d.todo.forEach(function(t){
-                    if(t.id === req.params.task){
-                        t.task = req.body.task
-                        t.description = req.body.description
-                    }
-                })
-            }
-        })
+        let dateObj = calendar.dates.find(d => d.date === req.params.id)
+        let taskObj = dateObj.todo.find(t => t.id === req.params.task)
+        taskObj.description = req.body.description
+        if(req.body.complete){
+            taskObj.complete = true
+        }else{
+            taskObj.complete = false
+        }
         calendar.save(function(err){
-            res.redirect(`/calendar/show/${req.params.id}`)
+            res.redirect('/calendar')
         })
     })
 }
 
 function del(req, res){
     Calendar.findById(req.user.id, function(err, calendar){
-        calendar.dates.forEach(function(d){
-            if(d.date === req.params.id){
-                d.todo.pull(req.params.task)
-            }
-        })
+        let dateObj = calendar.dates.find(d => d.date === req.params.id)
+        dateObj.todo.pull(req.params.task)
         calendar.save(function(err){
-            res.redirect(`/calendar/show/${req.params.id}`)
+            res.redirect('/calendar')
         })
     })
 }
 
 function add(req, res){
     Calendar.findById(req.user.id, function(err, calendar){
-        calendar.dates.forEach(function(d){
-            if(d.date === req.params.id){
-                d.todo.push(req.body)
-            }
-        })
+        let dateObj = calendar.dates.find(d => d.date === req.params.id)
+        dateObj.todo.push(req.body)
         calendar.save(function(err){
-            res.redirect(`/calendar/show/${req.params.id}`)
+            res.redirect('/calendar')
         })
     })
 }
@@ -93,20 +104,6 @@ function index(req, res){
         res.render('calendar/index', {
             user: req.user,
             calendarDates
-        })
-    })
-}
-
-function show(req, res){
-    let x = false
-    let dateObj
-    Calendar.findById(req.user.id, function(err, calendar){
-        dateObj = calendar.dates.find(d => d.date === req.params.id)
-
-        res.render('calendar/show',{
-            user: req.user,
-            todo: dateObj.todo,
-            id: req.params.id,
         })
     })
 }

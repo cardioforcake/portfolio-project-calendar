@@ -5,30 +5,47 @@ main{
     background-color: black;
 }
 
+.main-area{
+    margin-top: 1.5rem;
+}
+
 .welcome{
     color: white;
     display: grid;
     margin: 10rem auto 0 auto;
-    width: 25rem;
-    grid-template-rows: 2.3rem 2.8rem 3rem;
+    width: 30rem;
+    grid-template-rows: 3rem 3rem 4rem;
     text-transform: uppercase;
     font-weight: bold;
     text-align: center;
 }
 
 #welcome{
-    font-size: 1.5rem;
+    font-size: 2rem;
+}
+
+#sub-welcome{
+    font-size: 1.3rem;
 }
 
 #google{
-    width: 1.15rem;
-    height: 1.15rem;
+    width: 1.5rem;
+    height: 1.5rem;
 }
 
 .google-login{
-    height: 3rem !important;
-    width: 9rem;
+    height: 4rem !important;
+    width: 11rem;
     margin: 0 auto;
+    border-radius: 4px;
+}
+.google-login:hover{
+    border-radius: 40px;
+}
+
+#main-login-text{
+    font-size: 1.35rem;
+    color: white;
 }
 
 .lower{
@@ -36,8 +53,8 @@ main{
     margin-left: 0.3rem;
     margin-right: 0.3rem;
     color: white;
-    font-size: 0.6rem;
-    margin-top: 0.25rem;
+    font-size: 0.8rem;
+    margin-top: 0.12rem;
 }
 
 .space{
@@ -46,7 +63,6 @@ main{
 
 .log{
     margin-right: 1.5rem !important;
-    margin-bottom: 0.9rem !important;
 }
 
 .login-logo{
@@ -59,7 +75,7 @@ main{
 
 .modal-display{
     display: grid;
-    grid-template-rows: 4.5rem minmax(3rem, auto) 3rem;
+    grid-template-rows: 4.5rem minmax(4rem, auto) 3rem;
 }
 
 .modal-date-display{
@@ -68,30 +84,51 @@ main{
 
 .modal-date-weekday{
     font-weight: bold;
-    font-size: 1.4rem;
+    font-size: 1.5rem;
+}
+
+.modal-date-date{
+    font-size: 1.15rem;
 }
 
 .modal-create-new{
     margin: 1rem auto;
 }
 
-/* .new-task-form{
-    width: 18rem;
-} */
+.new-task-form{
+    width: 26.5rem;
+    height: 13rem;
+}
+
+.new-task-description{
+    resize: none;
+    width: 23.25rem;
+    height: 6rem;
+}
 
 .add-task-button{
-    margin-left: 3.75rem;
-    margin-top: 0.5rem;
-    width: 6rem;
-    height: 2rem;
+    margin-left: 8rem;
+    margin-top: 0.85rem;
+    width: 7rem;
+    height: 2.25rem;
     border-radius: 4px;
+    font-size: 1.1rem;
+}
+
+.add-task-button:hover{
+    border-bottom: solid rgb(33, 33, 33);
+    border-right: solid rgb(33, 33, 33);
+    border-top: solid rgb(88, 88, 88);
+    border-left: solid rgb(88, 88, 88);
+    cursor: pointer;
 }
 
 .single-task{
     min-height: 2rem;
-    max-width: 28.7rem;
+    max-width: 30rem;
     word-wrap: break-word;
     margin-bottom: 0.2rem;
+    font-size: 1.15rem;
 }
 
 .description-modal-trigger{
@@ -101,28 +138,36 @@ main{
 }
 
 .create-button{
-    height: 2.5rem;
+    height: 3rem;
     border-radius: 4px;
+    font-size: 1.1rem;
+    width: 10.5rem;
+}
+
+.create-button:hover{
+    /* background-color: rgba(0, 128, 0, 0.37); */
+    /* background-color:rgba(0, 255, 0, 0.404); */
+    border-bottom: solid rgb(33, 33, 33);
+    border-right: solid rgb(33, 33, 33);
+    border-top: solid rgb(88, 88, 88);
+    border-left: solid rgb(88, 88, 88);
+    cursor: pointer;
 }
 
 .update-task, .remove, .move{
     border-radius: 4px;
 }
 
-.remove{
-    background-color: rgba(255, 17, 0, 0.651);
-}
+
+
 
 textarea{
-    resize: none;
-    height: 4rem;
-    width: 14rem;
-    padding: 0.5rem 0.5rem 0.2rem 0.5rem;
+
 }
 .edit{
     display: grid;
-    grid-template-rows: 4.7rem 2rem 3rem;
-    grid-template-columns: 21rem;
+    grid-template-rows: 5.25rem 2.5rem 3rem;
+    grid-template-columns: 23.5rem;
 }
 
 .delete{
@@ -131,39 +176,66 @@ textarea{
 }
 
 .remove{
-    width: 6rem;
-    font-size: 0.9rem;
-    height: 2rem;
+    width: 7rem;
+    font-size: 1.1rem;
+    height: 2.25rem;
+    background-color: rgba(255, 17, 0, 0.651);
+}
+
+.remove:hover{
+    border-bottom: solid rgb(33, 33, 33);
+    border-right: solid rgb(33, 33, 33);
+    border-top: solid rgb(88, 88, 88);
+    border-left: solid rgb(88, 88, 88);
+    background-color: rgba(255, 17, 0, 0.829);
+    cursor: pointer;
 }
 
 .date-update{
     display: grid;
-    grid-template-columns: 14rem 1rem 6rem;
+    grid-template-columns: 15.5rem 1rem 6rem;
     grid-template-rows: 2rem;
 }
 
 .move{
     grid-column-start: 3;
     margin-top: 0.7rem;
-    height: 2rem;
+    height: 2.25rem;
+    font-size: 1.1rem;
+    width: 7rem;
+}
+
+.move:hover{
+    border-bottom: solid rgb(33, 33, 33);
+    border-right: solid rgb(33, 33, 33);
+    border-top: solid rgb(88, 88, 88);
+    border-left: solid rgb(88, 88, 88);
+    cursor: pointer;
 }
 
 .update{
     display: grid;
-    grid-template-columns: 15rem 6rem;
-    grid-template-rows: 2rem 2rem;
+    grid-template-columns: 16.5rem 6rem;
+    grid-template-rows: 2.25rem 2.25rem;
 }
 
 .text-area{
     grid-column-start: 1;
     grid-row-start: 1;
     grid-row-end: span 2;
-    height: 6.7rem;
+    resize: none;
+    height: 7.5rem;
+    width: 15.5rem;
+    padding: 0.5rem 0.5rem 0.2rem 0.5rem;
 }
 
 .check-box{
     grid-column-start: 2;
     grid-row-start: 1;
+}
+
+.checkbox-description{
+    font-size: 1.15rem !important;
 }
 
 span{
@@ -178,19 +250,29 @@ span{
 .update-task{
     grid-column-start: 2;
     grid-row-start: 2;
-    font-size: 0.9rem;
+    font-size: 1.1rem;
+    width: 7rem;
+    height: 2.25rem;
+}
+
+.update-task:hover{
+    border-bottom: solid rgb(33, 33, 33);
+    border-right: solid rgb(33, 33, 33);
+    border-top: solid rgb(88, 88, 88);
+    border-left: solid rgb(88, 88, 88);
+    cursor: pointer;
 }
 
 .task-list{
-    min-height: 20rem;
-    max-height: 31rem !important;
+    min-height: 25rem;
+    max-height: 38rem !important;
     width: 32rem;
     background: -webkit-linear-gradient(lightgreen,white);
 }
 
 .task-details{
-    width: 24.5rem;
-    height: 13rem;
+    width: 26.5rem;
+    height: 14rem;
 }
 
 
@@ -200,6 +282,7 @@ span{
 
 #current-month{
     color: white;
+    font-size: 1.5rem;
 }
 
 .complete{
@@ -210,8 +293,12 @@ span{
 .done{
     background-color: rgba(128, 128, 128, 0.562);
     height: 100%;
-    min-height: 2rem;
+    min-height: 2.25rem;
     width: 100%;
+}
+
+.done:hover{
+    background-color: rgba(128, 128, 128, 0.719);
 }
 
 .incomplete{
@@ -219,11 +306,16 @@ span{
     border: solid green;
 }
 
+
 .not-done{
     background-color: rgba(0, 128, 0, 0.37);
     height: 100%;
-    min-height: 2rem;
+    min-height: 2.25rem;
     width: 100%;
+}
+
+.not-done:hover{
+    background-color: rgba(0, 128, 0, 0.527);
 }
 
 .desc{
@@ -234,12 +326,12 @@ span{
 #dates{
     /* background-color:seagreen; */
     display: grid;
-    grid-template-rows: 3.3rem 3.3rem 3.3rem 3.3rem 3.3rem 3.3rem;
-    grid-template-columns: 3.3rem 3.3rem 3.3rem 3.3rem 3.3rem 3.3rem 3.3rem;
+    grid-template-rows: 4rem 4rem 4rem 4rem 4rem 4rem;
+    grid-template-columns: 4rem 4rem 4rem 4rem 4rem 4rem 4rem;
     /* border-style: solid;
     border-width: 1px; */
-    width: 27rem;
-    height: 23rem;
+    width: 32rem;
+    height: 28rem;
     grid-gap: 0.3rem;
     padding: auto auto auto auto;
     align-content: center;
@@ -249,7 +341,7 @@ span{
 
 #day-labels{
     display: grid;
-    grid-template-columns: 3.3rem 3.3rem 3.3rem 3.3rem 3.3rem 3.3rem 3.3rem;
+    grid-template-columns: 4rem 4rem 4rem 4rem 4rem 4rem 4rem;
     grid-template-rows: 2rem;
     width: 27rem;
     height: 3rem;
@@ -300,17 +392,22 @@ span{
     color: gray;
 }
 
+.day{
+    font-size: 1.2rem;
+    margin-top: 0.7rem;
+}
+
 #calendar-area{
-    margin: 0 auto;
-    height: 26rem;
-    width: 27rem;
+    margin: 1rem auto;
+    height: 32rem;
+    width: 34rem;
     background-color: seagreen;
     border-radius: 3px;
 }
 
 #calendar-header{
     display: grid;
-    grid-template-columns: 3rem 15rem 3rem;
+    grid-template-columns: 3rem 20rem 3rem;
     grid-template-rows: 2rem;
     width: 25rem;
     margin: 1rem auto 0.75rem auto;

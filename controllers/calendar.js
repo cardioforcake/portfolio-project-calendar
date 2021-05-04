@@ -68,10 +68,15 @@ function del(req, res){
 function add(req, res){
     Calendar.findById(req.user.id, function(err, calendar){
         let dateObj = calendar.dates.find(d => d.date === req.params.id)
-        dateObj.todo.push(req.body)
-        calendar.save(function(err){
+        if(!!req.body.description){
+            dateObj.todo.push(req.body)
+            calendar.save(function(err){
+                res.redirect('/calendar')
+            })
+        }else{
             res.redirect('/calendar')
-        })
+        }
+
     })
 }
 

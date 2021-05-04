@@ -1,7 +1,7 @@
 <%- include('../partials/header') %>
 
-<head></head>
-<div >
+<div class="main-area">
+<div class="calendar-area">
     <div id="calendar-header">
         <div><div class="arrow-btn" id="left-arrow"><i class="arrow left"></i></div></div>
         <div id="current-month" ></div>
@@ -21,6 +21,7 @@
         <!-- calendar insert -->
     </div>
     </div>
+</div>
 </div>
 
 
@@ -136,7 +137,7 @@ function updateCalendar(date){
     for(let i = firstDay.getDay(); i > 0 ; i--){
         dateCount++
         let newDate = new Date(firstDay.getFullYear(), firstDay.getMonth(), 1-i)
-        datesOnCalendar += populateCalendar(newDate,'prev-edge-dates')
+        datesOnCalendar += populateCalendar(newDate,'edge-dates')
     }
     for(let i = 1; i<= lastDate.getDate(); i++){
         dateCount++
@@ -145,7 +146,7 @@ function updateCalendar(date){
     }
     for(let i = 1; i <= 42-dateCount; i++){
         let newDate = new Date(date.getFullYear(), date.getMonth(), lastDate.getDate()+i)
-        datesOnCalendar += populateCalendar(newDate,'next-edge-dates')
+        datesOnCalendar += populateCalendar(newDate,'edge-dates')
     }
     dates.innerHTML = datesOnCalendar
     currentMonth.innerHTML = monthsList[date.getMonth()]
@@ -156,17 +157,7 @@ function populateCalendar(date, monthIdx){
     let calDates = ''
     let dateTag = `${date.getFullYear()}-${date.getMonth()+1}-${date.getDate()}`
     let dailyTasks = datesList[dateTag].todo
-    if(monthIdx === 'prev-edge-dates'){
-        if(date.getDate() === currentDate.getDate() && date.getMonth() === currentDate.getMonth()){
-            calDates += `<a href="#${dateTag}" class="date edge modal-trigger today-fade" >${date.getDate()}</a>
-        <div class="modal task-list" id="${dateTag}">
-            <div class="modal-content">`
-        }else{
-            calDates += `<a href="#${dateTag}" class="date edge modal-trigger">${date.getDate()}</a>
-        <div class="modal task-list" id="${dateTag}">
-            <div class="modal-content">`
-        }
-    }else if(monthIdx === 'next-edge-dates'){
+    if(monthIdx === 'edge-dates'){
         if(date.getDate() === currentDate.getDate() && date.getMonth() === currentDate.getMonth()){
             calDates += `<a href="#${dateTag}" class="date edge modal-trigger today-fade" >${date.getDate()}</a>
         <div class="modal task-list" id="${dateTag}">
@@ -206,7 +197,7 @@ function populateCalendar(date, monthIdx){
                                 <textarea name="description" class="text-area">${task.description}</textarea>
                                 <label class="check-box">
                                     <input type="checkbox" name="complete">
-                                    <span>Done?</span>
+                                    <span class="checkbox-description">Done?</span>
                                 </label>
                                 <input type="submit" value="Update" class="update-task">
                             </form>
@@ -215,7 +206,7 @@ function populateCalendar(date, monthIdx){
                             </form>
                             <form  action="/calendar/${dateTag}/${task._id}/move?_method=DELETE" method="POST" class="date-update">
                                 <input type="date" name="date">
-                                <input type="submit" value="move" class="move">
+                                <input type="submit" value="Move" class="move">
                             </form>
                         </div>
                     </div>
@@ -260,7 +251,7 @@ function populateCalendar(date, monthIdx){
                     <div class="modal new-task-form" id="${dateTag}add">
                         <div class="modal-content">
                             <form action="/calendar/${dateTag}/add" method="POST">
-                                <textarea name="description"></textarea>
+                                <textarea name="description" class="new-task-description"></textarea>
                                 <input type="submit" value="Add Task" class="add-task-button">
                             </form>
                         </div>

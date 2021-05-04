@@ -1,6 +1,6 @@
 # CFC-Calendar
 
-## This App is a personal calendar where the user add and manage reminders for themselves
+### This App is a personal calendar where the user add and manage reminders for themselves
 
 - The calendar is dynamically populated with the previously added tasks of the user that is logged in
 - The dates/months displayed on the calendar is updated based on the date that the user logs in

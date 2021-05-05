@@ -43,6 +43,7 @@ function update(req, res){
     Calendar.findById(req.user.id, function(err, calendar){
         let dateObj = calendar.dates.find(d => d.date === req.params.id)
         let taskObj = dateObj.todo.find(t => t.id === req.params.task)
+        req.body.description =  req.body.description.replace(/(\r\n|\n|\r)/gm, " ")
         taskObj.description = req.body.description
         if(req.body.complete){
             taskObj.complete = true
@@ -69,6 +70,7 @@ function add(req, res){
     Calendar.findById(req.user.id, function(err, calendar){
         let dateObj = calendar.dates.find(d => d.date === req.params.id)
         if(!!req.body.description){
+            req.body.description =  req.body.description.replace(/(\r\n|\n|\r)/gm, " ")
             dateObj.todo.push(req.body)
             calendar.save(function(err){
                 res.redirect('/calendar')
@@ -94,6 +96,12 @@ function index(req, res){
             dateTag = `${newDate.getFullYear()}-${newDate.getMonth()+1}-${newDate.getDate()}`
             let dateExists = calendar.dates.find(d => d.date === dateTag)
             if(!!dateExists){
+                // dateExists.todo.forEach(item =>{
+                //     item.description.replace(/\r\n|\r|\n/gm, '')
+                // })
+                // dateExists.todo.forEach(item=>{
+                //     console.log(item.description)
+                // })
                 calendarDates[dateTag] = dateExists
             }else{
                 req.body.date = dateTag
@@ -108,6 +116,9 @@ function index(req, res){
                 dateTag = `${newDate.getFullYear()}-${newDate.getMonth()+1}-${newDate.getDate()}`
                 let dateExists = calendar.dates.find(d => d.date === dateTag)
                 if(!!dateExists){
+                    // dateExists.todo.forEach(item =>{
+                    //     item.description.replace(/\r\n|\r|\n/gm, '')
+                    // })
                     calendarDates[dateTag] = dateExists
                 }else{
                     req.body.date = dateTag

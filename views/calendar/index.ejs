@@ -18,8 +18,8 @@
         <div class="day">Sat</div>
     </div>
     <div id='dates'>
-        <!-- calendar insert -->
-    </div>
+            <!-- calendar insert -->
+        </div>
     </div>
 </div>
 </div>
@@ -32,8 +32,10 @@
 $(document).ready(function(){
     $('.modal').modal()
 })
+let jsonDates = '<%- JSON.stringify(calendarDates)%>'
+jsonDates =  jsonDates.replace(/(\r\n|\n|\r)/gm, " ")
+let datesList = JSON.parse(jsonDates)
 
-let datesList = JSON.parse('<%- JSON.stringify(calendarDates)%>')
 const monthsList = [
     'January',
     'February',
@@ -126,6 +128,11 @@ leftArrow.addEventListener('click', function(){
 
 function initial(){
     updateCalendar(monthShown)
+    // document.querySelectorAll('.new-task-description').forEach(addBtn => function(){
+    //     addBtn.addEventListener('keydown', function(e){
+    //         event.preventDefault()
+    //     })
+    // })
 }
 
 function updateCalendar(date){
